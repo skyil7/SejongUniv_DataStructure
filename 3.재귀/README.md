@@ -15,3 +15,25 @@
 - 부정확한 결과
 - 미정지
 - 기억장소 고갈
+
+## 하노이 탑 문제
+```pseudo
+call A B C 3
+	call A C B 2
+		call A B C 1
+			print A C
+		print A B
+		call C A B 1
+			print C B
+	print A C
+	call B A C 2
+		call B C A 1
+			print B A
+		print B C
+		call A B C 1
+			print A C
+```
+
+위는 `n=3`의 하노이 탑 재귀 호출 구조이다.
+
+함수는 대강 `(from, by, to, n)`으로 이해하라.
