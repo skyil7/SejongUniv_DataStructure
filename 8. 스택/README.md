@@ -49,3 +49,59 @@ fullStackException();
 
 ### 역순 출력
 문자열의 역순 출력에 스택을 활용할 수 있다.
+
+### 후위수식
+우리가 일반적으로 사용하는 중위수식<sup>infix expression</sup>과 달리, 컴퓨터는 후위수식<sup>postfix expression</sup>을 사용한다.
+
+아래 두 식은 같은 식을 각각 중위수식과 후위수식으로 나타낸 것이다.
+```
+5 x 3 + 2 (6 + 3) x 2
+5 3 x 2 + 6 3 + 2 x + 
+```
+
+중위수식은 피연산자 연산자 피연산자의 순서로 나타내어지고, 우선순위는 괄호에 의해 무시될 수 있다.  
+반면, 후위수식에서는 피연산자.. 연산자 순서로 나타내어진다.
+
+중위수식을 후위수식으로 바꾸어 평가하는데 스택을 응용할 수 있다.
+
+```python
+def evaluate(): # 후위수식의 평가(연산)
+	# input: stream of legal postfix exp
+	# output number
+
+	S = stack()
+	while !endOfFile():
+		s = getSymbol()
+		if isOperand(s): # 피연산자인지
+			S.push(s)
+		else: # 연산자임
+			a = S.pop()
+			b = S.pop()
+			S.push(doOperator(s,b,a))
+	return S.pop()
+```
+
+```python
+def convert(): # 중위수식을 후위수식으로 변환
+	#input stream of legal infix expression
+	#output stream of legal postfix expression
+
+	S = stack()
+	while !endOfFile():
+		s = getSymbol()
+		if isOperand(s):
+			write(s)
+		elif s=='(':
+			S.push(s)
+		elif s==')':
+			while S.top() != '(':
+				write(S.pop())
+			S.pop()
+		else # s가 연산자
+			while !S.isEmpty() and P[s] <= P[S.top()]:
+				write(S.pop())
+			S.push(s)
+	while !S.isEmpty():
+		write(S.pop())
+	return
+```
