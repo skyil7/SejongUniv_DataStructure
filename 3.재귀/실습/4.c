@@ -9,7 +9,7 @@ int findMax(int* ar, int* end)
 		return *ar;
 	if (*ar > * (ar + 1))
 		*(ar + 1) = *ar;
-	findMax(ar + 1, end);
+	return findMax(ar + 1, end);
 }
 
 int main()
